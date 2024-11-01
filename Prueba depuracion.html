@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Portapapeles</title>
+</head>
+<body>
+    <h2>Prueba de Portapapeles</h2>
+    <script>
+        async function getClipboardText() {
+            try {
+                const text = await navigator.clipboard.readText();
+                alert("Texto del portapapeles: " + text); // Muestra el texto del portapapeles
+                return text;
+            } catch (err) {
+                alert("Error al leer el portapapeles: " + err);
+            }
+        }
+
+        getClipboardText();
+    </script>
+</body>
+</html>
