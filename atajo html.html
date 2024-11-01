@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Pegar Enlace</title>
+</head>
+<body>
+    <h2>Redireccionando...</h2>
+    <script>
+        // Captura el enlace copiado en el portapapeles
+        async function getClipboardText() {
+            try {
+                const text = await navigator.clipboard.readText(); // Lee el contenido del portapapeles
+                return text;
+            } catch (err) {
+                alert("Error al leer el portapapeles: " + err);
+            }
+        }
+
+        // Función principal para rellenar y ejecutar el formulario en la página destino
+        async function autoFillAndSubmit() {
+            const link = await getClipboardText(); // Obtiene el texto copiado
+
+            if (!link) {
+                alert("No se encontró ningún enlace en el portapapeles.");
+                return;
+            }
+
+            // Redirecciona a la página destino y ejecuta las acciones una vez cargada
+            window.location.href = "https://archive.ph"; // Reemplaza con la URL destino real
+
+            // Espera un momento para que la página se cargue
+            setTimeout(() => {
+                const inputField = document.querySelector("input[name='url']"); // Selector del campo de entrada
+                const submitButton = document.querySelector("input[type='submit']"); // Selector del botón
+
+                if (inputField && submitButton) {
+                    inputField.value = link; // Rellena el campo con el enlace
+                    submitButton.click(); // Haz clic en el botón
+                } else {
+                    alert("No se encontraron el campo o el botón en la página destino.");
+                }
+            }, 3000); // Ajusta el tiempo de espera si es necesario
+        }
+
+        // Ejecuta la función principal
+        autoFillAndSubmit();
+    </script>
+</body>
+</html>
